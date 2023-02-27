@@ -1,0 +1,27 @@
+stages:
+  - stage:
+      name: Build
+      identifier: Build
+      description: ""
+      type: CI
+      spec:
+        cloneCodebase: false
+        infrastructure:
+          type: KubernetesDirect
+          spec:
+            connectorRef: account.harnessworkloadaks
+            namespace: demolab
+            automountServiceAccountToken: true
+            nodeSelector: {}
+            os: Linux
+        execution:
+          steps:
+            - step:
+                type: Run
+                name: WhoAmI
+                identifier: WhoAmI
+                spec:
+                  connectorRef: account.harnessImage
+                  image: busybox
+                  shell: Sh
+                  command: whoami

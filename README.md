@@ -11,6 +11,7 @@ This collection of Terraform modules focuses on the initial setup of Harness Pla
 
 ### Pipelines
 Create and manage new Harness Platform Pipelines.  Read more about this module in the [README](pipelines/README.md)
+
 ### Templates
 Create and manage new Harness Platform Templates.  Read more about this module in the [README](templates/README.md)
 
