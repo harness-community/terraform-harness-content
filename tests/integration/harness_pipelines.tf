@@ -1,4 +1,8 @@
-# Format Organization Test outputs
+####################
+#
+# Harness Pipeline Validations
+#
+####################
 module "pipelines_file_relative" {
 
   source = "../../pipelines"

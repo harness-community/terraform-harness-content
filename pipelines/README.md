@@ -36,40 +36,145 @@ _Note: When the identifier variable is not provided, the module will automatical
 | global_tags | [Optional] Provide a Map of Tags to associate with all organizations and resources created | map(any) | {} | |
 
 ## Examples
-### Build a Single Project with minimal inputs
+### Build a Single Pipeline with minimal inputs
 ```
-module "project" {
-  source = "git@github.com:harness-community/terraform-harness-structure.git//projects"
+module "pipelines" {
+  source = "git@github.com:harness-community/terraform-harness-content.git//pipelines"
 
-  name            = "project1"
+  name            = "test-pipeline-relative"
   organization_id = "myorg"
+  project_id      = "myproject"
+  yaml_file       = "pipelines/ci-pipeline-demo.yaml"
+  tags            = {
+    role = "sample-pipeline"
+  }
+
 }
 ```
 
-### Build multiple projects
+### Build a Single Pipeline with stage definition yaml
 ```
-variable "project_list" {
+module "pipelines" {
+  source = "git@github.com:harness-community/terraform-harness-content.git//pipelines"
+
+  name            = "test-pipeline-raw-yaml-template"
+  organization_id = "myorg"
+  project_id      = "myproject"
+  yaml_data       = <<EOT
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: false
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: account.harnessworkloadaks
+              namespace: demolab
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Linux
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: WhoAmI
+                  identifier: WhoAmI
+                  spec:
+                    connectorRef: account.harnessImage
+                    image: busybox
+                    shell: Sh
+                    command: whoami
+  EOT
+  tags            = {
+    role = "sample-pipeline"
+  }
+
+}
+```
+
+### Build a Single Pipeline with full yaml
+```
+module "pipelines" {
+  source = "git@github.com:harness-community/terraform-harness-content.git//pipelines"
+
+  name            = "test-pipeline-yaml-data-full"
+  organization_id = "myorg"
+  project_id      = "myproject"
+  yaml_render     = false
+  yaml_data       = <<EOT
+  pipeline:
+    name: test-pipeline-yaml-data-full
+    identifier: test_pipeline_yaml_data_full
+    projectIdentifier: myproject
+    orgIdentifier: myorg
+    description: Harness Pipeline created via Terraform
+    stages:
+      - stage:
+          description: ""
+          identifier: Build
+          name: Build
+          spec:
+            cloneCodebase: false
+            execution:
+              steps:
+                - step:
+                    identifier: WhoAmI
+                    name: WhoAmI
+                    spec:
+                      command: whoami
+                      connectorRef: account.harnessImage
+                      image: busybox
+                      shell: Sh
+                    type: Run
+            infrastructure:
+              spec:
+                automountServiceAccountToken: true
+                connectorRef: account.harnessworkloadaks
+                namespace: demolab
+                nodeSelector: {}
+                os: Linux
+              type: KubernetesDirect
+          type: CI
+
+  EOT
+  tags            = {
+    role = "sample-pipeline"
+  }
+
+}
+```
+
+### Build multiple Pipelines
+```
+variable "pipeline_list" {
     type = list(map())
     default = [
         {
             name = "alpha"
-            description = "Project for alpha"
+            description = "Pipeline for alpha"
+            yaml_file = "files/pipeline_alpha.yml"
             tags = {
-                purpose = "alpha"
+                role = "alpha"
             }
         },
         {
             name = "bravo"
-            description = "Project for bravo"
+            description = "Pipeline for bravo"
+            yaml_file = "files/pipeline_bravo.yml"
             tags = {
-                purpose = "bravo"
+                role = "bravo"
             }
         },
         {
             name = "charlie"
-            description = "Project for charlie"
+            description = "Pipeline for charlie"
+            yaml_file = "files/pipeline_charlie.yml"
             tags = {
-                purpose = "charlie"
+                role = "charlie"
             }
         }
     ]
@@ -82,12 +187,13 @@ variable "global_tags" {
     }
 }
 
-module "projects" {
-  source = "git@github.com:harness-community/terraform-harness-structure.git//projects"
-  for_each = { for project in var.project_list : project.name => project }
+module "pipelines" {
+  source = "git@github.com:harness-community/terraform-harness-content.git//pipelines"
+  for_each = { for pipeline in var.pipeline_list : pipeline.name => pipeline }
 
   name        = each.value.name
   description = each.value.description
+  yaml_file   = each.value.yaml_file
   tags        = each.value.tags
   global_tags = var.global_tags
 }

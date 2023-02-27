@@ -1,0 +1,21 @@
+spec:
+  type: ShellScript
+  timeout: 10m
+  spec:
+    shell: Bash
+    onDelegate: true
+    source:
+      type: Inline
+      spec:
+        script: |-
+          #!/bin/sh
+          set -eou pipefail
+          set +x
+
+          echo '
+          ------------------------------------------------------
+          ---- This is a Test Step ----
+          ------------------------------------------------------
+          '
+    environmentVariables: []
+    outputVariables: []
