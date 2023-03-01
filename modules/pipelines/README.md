@@ -39,7 +39,7 @@ _Note: When the identifier variable is not provided, the module will automatical
 ### Build a Single Pipeline with minimal inputs
 ```
 module "pipelines" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//pipelines"
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
 
   name            = "test-pipeline-relative"
   organization_id = "myorg"
@@ -55,7 +55,7 @@ module "pipelines" {
 ### Build a Single Pipeline with stage definition yaml
 ```
 module "pipelines" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//pipelines"
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
 
   name            = "test-pipeline-raw-yaml-template"
   organization_id = "myorg"
@@ -99,7 +99,7 @@ module "pipelines" {
 ### Build a Single Pipeline with full yaml
 ```
 module "pipelines" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//pipelines"
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
 
   name            = "test-pipeline-yaml-data-full"
   organization_id = "myorg"
@@ -188,7 +188,7 @@ variable "global_tags" {
 }
 
 module "pipelines" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//pipelines"
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
   for_each = { for pipeline in var.pipeline_list : pipeline.name => pipeline }
 
   name        = each.value.name

@@ -44,7 +44,7 @@ _Note: When the identifier variable is not provided, the module will automatical
 ### Build a simple Step Template with minimal inputs using rendered payload
 ```
 module "templates" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//templates"
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/templates"
 
   name             = "test-step-template"
   yaml_data        = <<EOT
@@ -81,7 +81,7 @@ module "templates" {
 ### Build a simple Step Template with full step yaml from file
 ```
 module "templates" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//templates"
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/templates"
 
   name             = "test-step-template"
   organization_id  = "myorg"
@@ -138,7 +138,7 @@ variable "global_tags" {
 }
 
 module "templates" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//templates"
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/templates"
   for_each = { for template in var.template_list : template.name => template }
 
   name             = each.value.name
