@@ -5,7 +5,7 @@
 ####################
 module "pipelines_file_relative" {
 
-  source = "../../pipelines"
+  source = "../../modules/pipelines"
 
   name            = "test-pipeline-relative"
   organization_id = local.organization_id
@@ -17,7 +17,7 @@ module "pipelines_file_relative" {
 
 module "pipelines_file_absolute" {
 
-  source = "../../pipelines"
+  source = "../../modules/pipelines"
 
   name            = "test-pipeline-absolute"
   organization_id = local.organization_id
@@ -29,7 +29,7 @@ module "pipelines_file_absolute" {
 
 module "pipelines_file_yaml_data_minimal" {
 
-  source = "../../pipelines"
+  source = "../../modules/pipelines"
 
   name            = "test-pipeline-yaml-data-minimal"
   organization_id = local.organization_id
@@ -69,7 +69,7 @@ module "pipelines_file_yaml_data_minimal" {
 
 module "pipelines_file_yaml_data_full" {
 
-  source = "../../pipelines"
+  source = "../../modules/pipelines"
 
   name            = "test-pipeline-yaml-data-full"
   organization_id = local.organization_id

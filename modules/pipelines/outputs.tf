@@ -8,4 +8,5 @@ output "pipeline_details" {
     time_sleep.pipeline_setup
   ]
   value = harness_platform_pipeline.pipelines
+  description = "Details for the created Harness Pipeline"
 }

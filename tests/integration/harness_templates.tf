@@ -5,7 +5,7 @@
 ####################
 module "template_step_relative" {
 
-  source = "../../templates"
+  source = "../../modules/templates"
 
   name             = "test-template-step-relative"
   organization_id  = local.organization_id
@@ -18,7 +18,7 @@ module "template_step_relative" {
 }
 module "template_step_relative_organization" {
 
-  source = "../../templates"
+  source = "../../modules/templates"
 
   name             = "test-template-step-relative-organization"
   organization_id  = local.organization_id
@@ -30,7 +30,7 @@ module "template_step_relative_organization" {
 }
 module "template_step_relative_account" {
 
-  source = "../../templates"
+  source = "../../modules/templates"
 
   name             = "${local.organization_id}-test-template-step-relative-account"
   template_version = "v1.0.0"
@@ -41,7 +41,7 @@ module "template_step_relative_account" {
 }
 module "template_step_absolute" {
 
-  source = "../../templates"
+  source = "../../modules/templates"
 
   name             = "test-template-step-absolute"
   organization_id  = local.organization_id
@@ -54,7 +54,7 @@ module "template_step_absolute" {
 }
 module "template_step_yaml_data_minimal" {
 
-  source = "../../templates"
+  source = "../../modules/templates"
 
   name             = "test-template-step-yaml-data-minimal"
   organization_id  = local.organization_id
@@ -89,7 +89,7 @@ module "template_step_yaml_data_minimal" {
 }
 module "template_step_yaml_data_full" {
 
-  source = "../../templates"
+  source = "../../modules/templates"
 
   identifier       = "test_template_step_yaml_data_full"
   name             = "test-template-step-yaml-data-full"
