@@ -43,35 +43,35 @@ locals {
   yaml = (
     var.yaml_file != null
     ?
-      try(
-        file("${path.module}/rendered/${var.yaml_file}"),
-        file("${path.root}/rendered/${var.yaml_file}"),
-        file(var.yaml_file)
-      )
+    try(
+      file("${path.module}/rendered/${var.yaml_file}"),
+      file("${path.root}/rendered/${var.yaml_file}"),
+      file(var.yaml_file)
+    )
     :
-      length(var.yaml_data)==0
-      ?
-        "invalid-missing-yaml-details"
-      :
-        var.yaml_data
+    length(var.yaml_data) == 0
+    ?
+    "invalid-missing-yaml-details"
+    :
+    var.yaml_data
 
   )
 
   yaml_payload = (
     var.yaml_render
     ?
-      templatefile(
-        "${path.module}/templates/pipeline_definition.yml.tpl",
-        {
-          pipeline_name           = var.name
-          description             = var.description
-          pipeline_identifier     = local.fmt_identifier
-          organization_identifier = var.organization_id
-          project_identifier      = var.project_id
-          yaml_data               = yamlencode(yamldecode(local.yaml))
-        }
-      )
+    templatefile(
+      "${path.module}/templates/pipeline_definition.yml.tpl",
+      {
+        pipeline_name           = var.name
+        description             = var.description
+        pipeline_identifier     = local.fmt_identifier
+        organization_identifier = var.organization_id
+        project_identifier      = var.project_id
+        yaml_data               = yamlencode(yamldecode(local.yaml))
+      }
+    )
     :
-      local.yaml
+    local.yaml
   )
 }

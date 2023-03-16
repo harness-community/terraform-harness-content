@@ -49,6 +49,9 @@ Create and manage new Harness Platform Pipelines.  Read more about this module i
 ### Templates
 Create and manage new Harness Platform Templates.  Read more about this module in the [README](modules/templates/README.md)
 
+### Triggers
+Create and manage new Harness Platform Triggers.  Read more about this module in the [README](modules/triggers/README.md)
+
 ## Contributing
 A complete [Contributors Guide](CONTRIBUTING.md) can be found in this repository
 

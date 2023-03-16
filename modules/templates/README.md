@@ -4,19 +4,28 @@ Terraform Module for creating and managing Harness Templates
 ## Summary
 This module handle the creation and managment of templates by leveraging the Harness Terraform provider
 
+## Supported Terraform Versions
+    - v1.3.7
+    - v1.3.8
+    - v1.3.9
+    - v1.4.0
+
 ## Providers
 
 ```
 terraform {
   required_providers {
     harness = {
-      source = "harness/harness"
+      source  = "harness/harness"
+      version = "~> 0.14"
     }
     time = {
-      source = "hashicorp/time"
+      source  = "hashicorp/time"
+      version = "~> 0.9.1"
     }
   }
 }
+
 ```
 
 ## Variables
@@ -39,6 +48,12 @@ _Note: When the identifier variable is not provided, the module will automatical
 | is_stable | [Optional] (Boolean) If true, given version for Template to be set as stable. | bool | true | |
 | tags | [Optional] Provide a Map of Tags to associate with the project | map(any) | {} | |
 | global_tags | [Optional] Provide a Map of Tags to associate with the project and resources created | map(any) | {} | |
+
+## Outputs
+| Name | Description | Value |
+| --- | --- | --- |
+| details | Details for the created Harness Template | Map containing details of created template
+| template_details | [Deprecated] Details for the created Harness Template | Map containing details of created template
 
 ## Examples
 ### Build a simple Step Template with minimal inputs using rendered payload

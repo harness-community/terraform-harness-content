@@ -3,6 +3,20 @@
 # Harness Template Validations
 #
 ####################
+locals {
+  template_outputs = flatten([
+    {
+      test                  = true
+      relative              = module.template_step_relative.details
+      relative_organization = module.template_step_relative_organization.details
+      relative_account      = module.template_step_relative_account.details
+      absolute              = module.template_step_absolute.details
+      yaml_data             = module.template_step_yaml_data_minimal.details
+      yaml_data_full        = module.template_step_yaml_data_full.details
+    }
+  ])
+}
+
 module "template_step_relative" {
 
   source = "../../modules/templates"
@@ -98,7 +112,7 @@ module "template_step_yaml_data_full" {
   template_version = "v1.0.0"
   type             = "Step"
   comments         = "Created"
-  yaml_render = false
+  yaml_render      = false
   yaml_data        = <<EOT
   template:
     name: test-template-step-yaml-data-full
@@ -133,6 +147,6 @@ module "template_step_yaml_data_full" {
   tags = {
     role = "full-yaml-data"
   }
-  global_tags      = local.common_tags
+  global_tags = local.common_tags
 
 }
