@@ -53,58 +53,53 @@ _Note: When the identifier variable is not provided, the module will automatical
 | details | Details for the created Harness Trigger | Map containing details of created trigger
 
 ## Examples
-### Build a Single Pipeline with minimal inputs
+### Build a Single Trigger with minimal inputs
 ```
-module "pipelines" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
+module "triggers" {
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/triggers"
 
-  name            = "test-pipeline-relative"
+  name            = "test-trigger"
   organization_id = "myorg"
   project_id      = "myproject"
-  yaml_file       = "pipelines/ci-pipeline-demo.yaml"
+  pipeline_id     = "mypipeline"
+  yaml_file       = "triggers/basic-trigger-example.yaml"
   tags            = {
-    role = "sample-pipeline"
+    role = "sample-trigger"
   }
 
 }
 ```
 
-### Build a Single Pipeline with stage definition yaml
+### Build a Single Trigger with yaml
 ```
 module "pipelines" {
   source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
 
-  name            = "test-pipeline-raw-yaml-template"
+  name            = "test-trigger"
   organization_id = "myorg"
   project_id      = "myproject"
+  pipeline_id     = "mypipeline"
   yaml_data       = <<EOT
-  stages:
-    - stage:
-        name: Build
-        identifier: Build
-        description: ""
-        type: CI
+  source:
+    type: "Webhook"
+    spec:
+      type: "Github"
+      spec:
+        type: "Push"
         spec:
-          cloneCodebase: false
-          infrastructure:
-            type: KubernetesDirect
-            spec:
-              connectorRef: account.harnessworkloadaks
-              namespace: demolab
-              automountServiceAccountToken: true
-              nodeSelector: {}
-              os: Linux
-          execution:
-            steps:
-              - step:
-                  type: Run
-                  name: WhoAmI
-                  identifier: WhoAmI
-                  spec:
-                    connectorRef: account.harnessImage
-                    image: busybox
-                    shell: Sh
-                    command: whoami
+          connectorRef: "account.TestAccResourceConnectorGithub_Ssh_IZBeG"
+          autoAbortPreviousExecutions: false
+          payloadConditions:
+          - key: "changedFiles"
+            operator: "Equals"
+            value: "value"
+          - key: "targetBranch"
+            operator: "Equals"
+            value: "value"
+          headerConditions: []
+          repoName: "repoName"
+          actions: []
+  inputYaml: "pipeline: {}\n"
   EOT
   tags            = {
     role = "sample-pipeline"
@@ -118,101 +113,45 @@ module "pipelines" {
 module "pipelines" {
   source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
 
-  name            = "test-pipeline-yaml-data-full"
+  name            = "test-trigger"
   organization_id = "myorg"
   project_id      = "myproject"
+  pipeline_id     = "mypipeline"
   yaml_render     = false
   yaml_data       = <<EOT
-  pipeline:
-    name: test-pipeline-yaml-data-full
-    identifier: test_pipeline_yaml_data_full
-    projectIdentifier: myproject
+  trigger:
+    name: test-trigger
+    identifier: test_trigger
     orgIdentifier: myorg
-    description: Harness Pipeline created via Terraform
-    stages:
-      - stage:
-          description: ""
-          identifier: Build
-          name: Build
+    projectIdentifier: myproject
+    pipelineIdentifier: mypipeline
+    description: Harness Pipeline Trigger created via Terraform
+    source:
+      type: "Webhook"
+      spec:
+        type: "Github"
+        spec:
+          type: "Push"
           spec:
-            cloneCodebase: false
-            execution:
-              steps:
-                - step:
-                    identifier: WhoAmI
-                    name: WhoAmI
-                    spec:
-                      command: whoami
-                      connectorRef: account.harnessImage
-                      image: busybox
-                      shell: Sh
-                    type: Run
-            infrastructure:
-              spec:
-                automountServiceAccountToken: true
-                connectorRef: account.harnessworkloadaks
-                namespace: demolab
-                nodeSelector: {}
-                os: Linux
-              type: KubernetesDirect
-          type: CI
+            connectorRef: "account.TestAccResourceConnectorGithub_Ssh_IZBeG"
+            autoAbortPreviousExecutions: false
+            payloadConditions:
+            - key: "changedFiles"
+              operator: "Equals"
+              value: "value"
+            - key: "targetBranch"
+              operator: "Equals"
+              value: "value"
+            headerConditions: []
+            repoName: "repoName"
+            actions: []
+    inputYaml: "pipeline: {}\n"
 
   EOT
   tags            = {
-    role = "sample-pipeline"
+    role = "sample-trigger"
   }
 
-}
-```
-
-### Build multiple Pipelines
-```
-variable "pipeline_list" {
-    type = list(map())
-    default = [
-        {
-            name = "alpha"
-            description = "Pipeline for alpha"
-            yaml_file = "files/pipeline_alpha.yml"
-            tags = {
-                role = "alpha"
-            }
-        },
-        {
-            name = "bravo"
-            description = "Pipeline for bravo"
-            yaml_file = "files/pipeline_bravo.yml"
-            tags = {
-                role = "bravo"
-            }
-        },
-        {
-            name = "charlie"
-            description = "Pipeline for charlie"
-            yaml_file = "files/pipeline_charlie.yml"
-            tags = {
-                role = "charlie"
-            }
-        }
-    ]
-}
-
-variable "global_tags" {
-    type = map()
-    default = {
-        environment = "NonProd"
-    }
-}
-
-module "pipelines" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
-  for_each = { for pipeline in var.pipeline_list : pipeline.name => pipeline }
-
-  name        = each.value.name
-  description = each.value.description
-  yaml_file   = each.value.yaml_file
-  tags        = each.value.tags
-  global_tags = var.global_tags
 }
 ```
 
