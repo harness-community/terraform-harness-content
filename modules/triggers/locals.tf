@@ -1,6 +1,6 @@
 ####################
 #
-# Harness Templates Local Variables
+# Harness Trigger Local Variables
 #
 ####################
 locals {
@@ -49,11 +49,16 @@ locals {
       file(var.yaml_file)
     )
     :
-    length(var.yaml_data) == 0
+    var.yaml_data == null
     ?
     "invalid-missing-yaml-details"
     :
-    var.yaml_data
+      length(var.yaml_data) == 0
+      ?
+        "invalid-missing-yaml-details"
+
+      :
+        var.yaml_data
 
   )
 
@@ -61,15 +66,15 @@ locals {
     var.yaml_render
     ?
     templatefile(
-      "${path.module}/templates/template_definition.yml.tpl",
+      "${path.module}/templates/trigger_definition.yml.tpl",
       {
-        pipeline_name           = var.name
+        trigger_name            = var.name
         description             = var.description
-        pipeline_identifier     = local.fmt_identifier
+        trigger_identifier      = local.fmt_identifier
         organization_identifier = var.organization_id
         project_identifier      = var.project_id
-        type                    = var.type
-        version_label           = var.template_version
+        pipeline_identifier     = var.pipeline_id
+        trigger_enabled = var.trigger_enabled
         yaml_data               = yamlencode(yamldecode(local.yaml))
       }
     )

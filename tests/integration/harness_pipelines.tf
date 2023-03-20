@@ -3,6 +3,18 @@
 # Harness Pipeline Validations
 #
 ####################
+locals {
+  pipeline_outputs = flatten([
+    {
+      test           = true
+      relative       = module.pipelines_file_relative.details
+      absolute       = module.pipelines_file_absolute.details
+      yaml_data      = module.pipelines_file_yaml_data_minimal.details
+      yaml_data_full = module.pipelines_file_yaml_data_full.details
+    }
+  ])
+}
+
 module "pipelines_file_relative" {
 
   source = "../../modules/pipelines"
