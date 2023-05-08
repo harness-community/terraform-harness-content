@@ -1,8 +1,8 @@
-# Terraform Modules for Harness Pipelines
-Terraform Module for creating and managing Harness Pipelines
+# Terraform Modules for Harness Input Sets
+Terraform Module for creating and managing Harness Input Sets
 
 ## Summary
-This module handle the creation and managment of pipelines by leveraging the Harness Terraform provider
+This module handle the creation and managment of Input Sets by leveraging the Harness Terraform provider
 
 ## Supported Terraform Versions
 _Note: These modules require a minimum of Terraform Version 1.2.0 to support the Input Validations and Precondition Lifecycle hooks leveraged in the code._
@@ -53,64 +53,45 @@ _Note: When the identifier variable is not provided, the module will automatical
 | yaml_file | [Optional] (String) File Path to yaml snippet to include. Must not be provided in conjuction with `var.yaml_data` | string | null | |
 | yaml_data | [Optional] (String) Description of the resource. Must not be provided in conjuction with `var.yaml_file` | string | null | |
 | yaml_render | [Optional] (Boolean) Determines if the pipeline data should be templatized or is a full pipeline reference file | bool | true | |
-| trigger_enabled | [Optional] (Boolean) Determines if the pipeline data should be templatized or is a full pipeline reference file | bool | true | |
 | tags | [Optional] Provide a Map of Tags to associate with the organization | map(any) | {} | |
 | global_tags | [Optional] Provide a Map of Tags to associate with all organizations and resources created | map(any) | {} | |
 
 ## Outputs
 | Name | Description | Value |
 | --- | --- | --- |
-| details | Details for the created Harness Trigger | Map containing details of created trigger
+| details | Details for the created Harness Input Sets | Map containing details of created input_sets
 
 ## Examples
-### Build a Single Trigger with minimal inputs
+### Build a Single Input Set with minimal inputs
 ```
-module "triggers" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//modules/triggers"
+module "input_sets" {
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/input_sets"
 
-  name            = "test-trigger"
+  name            = "test-input-set"
   organization_id = "myorg"
   project_id      = "myproject"
   pipeline_id     = "mypipeline"
-  yaml_file       = "triggers/basic-trigger-example.yaml"
+  yaml_file       = "input_sets/basic-input-set-example.yaml"
   tags            = {
-    role = "sample-trigger"
+    role = "sample-input-set"
   }
 
 }
 ```
 
-### Build a Single Trigger with yaml
+### Build a Single Input Set with yaml
 ```
-module "triggers" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//modules/pipelines"
+module "input_sets" {
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/input_sets"
 
-  name            = "test-trigger"
+  name            = "test-input-set"
   organization_id = "myorg"
   project_id      = "myproject"
   pipeline_id     = "mypipeline"
   yaml_data       = <<EOT
-  source:
-    type: "Webhook"
-    spec:
-      type: "Github"
-      spec:
-        type: "Push"
-        spec:
-          connectorRef: "account.TestAccResourceConnectorGithub_Ssh_IZBeG"
-          autoAbortPreviousExecutions: false
-          payloadConditions:
-          - key: "changedFiles"
-            operator: "Equals"
-            value: "value"
-          - key: "targetBranch"
-            operator: "Equals"
-            value: "value"
-          headerConditions: []
-          repoName: "repoName"
-          actions: []
-  inputYaml: |
-    pipeline: {}
+  variables:
+    - name: myvar
+      value: success
   EOT
   tags            = {
     role = "sample-pipeline"
@@ -119,45 +100,28 @@ module "triggers" {
 }
 ```
 
-### Build a Single Pipeline with full yaml
+### Build a Single Input Set with full yaml
 ```
-module "triggers" {
-  source = "git@github.com:harness-community/terraform-harness-content.git//modules/triggers"
+module "input_sets" {
+  source = "git@github.com:harness-community/terraform-harness-content.git//modules/input_sets"
 
-  name            = "test-trigger"
+  name            = "test-input-set"
   organization_id = "myorg"
   project_id      = "myproject"
   pipeline_id     = "mypipeline"
   yaml_render     = false
   yaml_data       = <<EOT
-  trigger:
-    name: test-trigger
-    identifier: test_trigger
+  inputSet:
+    name: test-input-set
+    identifier: test_input_set
     orgIdentifier: myorg
     projectIdentifier: myproject
-    pipelineIdentifier: mypipeline
-    description: Harness Pipeline Trigger created via Terraform
-    source:
-      type: "Webhook"
-      spec:
-        type: "Github"
-        spec:
-          type: "Push"
-          spec:
-            connectorRef: "account.TestAccResourceConnectorGithub_Ssh_IZBeG"
-            autoAbortPreviousExecutions: false
-            payloadConditions:
-            - key: "changedFiles"
-              operator: "Equals"
-              value: "value"
-            - key: "targetBranch"
-              operator: "Equals"
-              value: "value"
-            headerConditions: []
-            repoName: "repoName"
-            actions: []
-    inputYaml: |
-      pipeline: {}
+    description: Harness Input Set created via Terraform
+    pipeline:
+      identifier: mypipeline
+      variables:
+        - name: myvar
+          value: success
 
   EOT
   tags            = {
