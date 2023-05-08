@@ -75,7 +75,8 @@ module "triggers_yaml_data" {
           headerConditions: []
           repoName: "repoName"
           actions: []
-  inputYaml: "pipeline: {}\n"
+  inputYaml: |
+    pipeline: {}
 
   EOT
 }
@@ -115,7 +116,8 @@ module "triggers_yaml_data_full" {
             headerConditions: []
             repoName: "repoName"
             actions: []
-    inputYaml: "pipeline: {}\n"
+    inputYaml: |
+      pipeline: {}
 
   EOT
 }

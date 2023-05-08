@@ -1,6 +1,6 @@
 ####################
 #
-# Harness Trigger Local Variables
+# Harness Input Sets Local Variables
 #
 ####################
 locals {
@@ -66,15 +66,14 @@ locals {
     var.yaml_render
     ?
     templatefile(
-      "${path.module}/templates/trigger_definition.yml.tpl",
+      "${path.module}/templates/input_set_definition.yml.tpl",
       {
-        trigger_name            = var.name
+        input_set_name          = var.name
         description             = var.description
-        trigger_identifier      = local.fmt_identifier
+        input_set_identifier    = local.fmt_identifier
         organization_identifier = var.organization_id
         project_identifier      = var.project_id
         pipeline_identifier     = var.pipeline_id
-        trigger_enabled         = var.trigger_enabled
         yaml_data               = yamlencode(yamldecode(local.yaml))
       }
     )
