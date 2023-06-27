@@ -174,11 +174,11 @@ module "templates" {
 ```
 
 ## Contributing
-A complete [Contributors Guide](../CONTRIBUTING.md) can be found in this repository
+A complete [Contributors Guide](../../CONTRIBUTING.md) can be found in this repository
 
 ## Authors
 Module is maintained by Harness, Inc
 
 ## License
 
-MIT License. See [LICENSE](../LICENSE) for full details.
+MIT License. See [LICENSE](../../LICENSE) for full details.
