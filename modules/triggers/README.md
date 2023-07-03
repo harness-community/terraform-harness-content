@@ -42,11 +42,11 @@ _Note: When the identifier variable is not provided, the module will automatical
 
 | Name | Description | Type | Default Value | Mandatory |
 | --- | --- | --- | --- | --- |
-| name | [Required] Provide an organization name.  Must be two or more characters | string | | X |
+| name | [Required] Provide a resource name. Must be at least 1 character but but less than 128 characters | string | | X |
+| identifier | [Optional] Provide a custom identifier.  Must be at least 1 character but but less than 128 characters and can only include alphanumeric or '_' | string | null | |
 | organization_id | [Required] Provide an organization reference ID.  Must exist before execution | string | | X |
 | project_id | [Required] Provide an project reference ID.  Must exist before execution | string | | X |
 | pipeline_id | [Required] Provide an pipeline reference ID.  Must exist before execution | string | | X |
-| identifier | [Optional] Provide a custom identifier.  More than 2 but less than 128 characters and can only include alphanumeric or '_' | string | null | |
 | description | [Optional] Provide an organization description.  Must be six or more characters | string | "Harness Organization created via Terraform" | |
 | yaml_file | [Optional] (String) File Path to yaml snippet to include. Must not be provided in conjuction with `var.yaml_data` | string | null | |
 | yaml_data | [Optional] (String) Description of the resource. Must not be provided in conjuction with `var.yaml_file` | string | null | |
