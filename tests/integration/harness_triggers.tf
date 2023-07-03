@@ -27,6 +27,18 @@ module "pipeline_triggers" {
 
 }
 
+module "pipeline_triggers_case_sensitive" {
+  source = "../../modules/pipelines"
+
+  name            = "Test Trigger Pipeline CaseSensitive"
+  organization_id = local.organization_id
+  project_id      = local.project_id
+  yaml_file       = "pipelines/ci-pipeline-demo.yaml"
+  global_tags     = local.common_tags
+  case_sensitive  = true
+
+}
+
 module "triggers_minimal" {
   source = "../../modules/triggers"
 

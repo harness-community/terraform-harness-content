@@ -27,6 +27,19 @@ module "pipelines_file_relative" {
 
 }
 
+module "pipelines_file_relative_case_sensitive" {
+
+  source = "../../modules/pipelines"
+
+  name            = "Test Pipeline Relative CaseSensitive"
+  organization_id = local.organization_id
+  project_id      = local.project_id
+  yaml_file       = "pipelines/ci-pipeline-demo.yaml"
+  global_tags     = local.common_tags
+  case_sensitive  = true
+
+}
+
 module "pipelines_file_absolute" {
 
   source = "../../modules/pipelines"

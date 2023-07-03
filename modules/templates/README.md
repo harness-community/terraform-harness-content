@@ -38,7 +38,7 @@ terraform {
 
 ## Variables
 
-_Note: When the identifier variable is not provided, the module will automatically format the identifier based on the provided resource name_
+_Note: When the identifier variable is not provided, the module will automatically format the identifier based on the provided resource name and the identifier will be in lowercase format with all spaces and hyphens replaced with '\_'. To override the case lowering, you must set the parameter `case_sensitive: true`_
 
 | Name | Description | Type | Default Value | Mandatory |
 | --- | --- | --- | --- | --- |
@@ -54,6 +54,7 @@ _Note: When the identifier variable is not provided, the module will automatical
 | yaml_data | [Optional] (String) Description of the resource. | string | null | One of `yaml_file` or `yaml_data` must be provided. |
 | yaml_render | [Optional] (Boolean) Determines if the pipeline data should be templatized or is a full pipeline reference file | bool | true | |
 | is_stable | [Optional] (Boolean) If true, given version for Template to be set as stable. | bool | true | |
+| case_sensitive | [Optional] Should identifiers be case sensitive by default? (Note: Setting this value to `true` will retain the case sensitivity of the identifier) | bool | false | |
 | tags | [Optional] Provide a Map of Tags to associate with the project | map(any) | {} | |
 | global_tags | [Optional] Provide a Map of Tags to associate with the project and resources created | map(any) | {} | |
 
