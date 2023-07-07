@@ -26,6 +26,18 @@ module "pipeline_input_sets" {
 
 }
 
+module "pipeline_input_sets_case_sensitive" {
+  source = "../../modules/pipelines"
+
+  name            = "Test Input Set Pipeline CaseSensitive"
+  organization_id = local.organization_id
+  project_id      = local.project_id
+  yaml_file       = "pipelines/ci-pipeline-demo.yaml"
+  global_tags     = local.common_tags
+  case_sensitive  = true
+
+}
+
 module "input_sets_minimal" {
   source = "../../modules/input_sets"
 

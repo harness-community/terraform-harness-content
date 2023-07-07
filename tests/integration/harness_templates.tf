@@ -30,6 +30,21 @@ module "template_step_relative" {
   global_tags      = local.common_tags
 
 }
+
+module "template_step_relative_case_sensitive" {
+
+  source = "../../modules/templates"
+
+  name             = "Test Template Step Relative CaseSensitive"
+  organization_id  = local.organization_id
+  project_id       = local.project_id
+  template_version = "v1.0.0"
+  type             = "Step"
+  yaml_file        = "templates/step-template.yaml"
+  global_tags      = local.common_tags
+  case_sensitive   = true
+
+}
 module "template_step_relative_organization" {
 
   source = "../../modules/templates"

@@ -11,8 +11,10 @@ _Note: The list of supported Terraform Versions is based on the most recent of e
 
     - v1.2.9
     - v1.3.9
-    - v1.4.0
-    - v1.4.2
+    - v1.4.6
+    - v1.5.0
+    - v1.5.1
+    - v1.5.2
 
 _Note: Terraform version 1.4.1 will not work due to an issue with the Random provider_
 
@@ -36,18 +38,20 @@ terraform {
 
 ## Variables
 
-_Note: When the identifier variable is not provided, the module will automatically format the identifier based on the provided resource name_
+_Note: When the identifier variable is not provided, the module will automatically format the identifier based on the provided resource name and the identifier will be in lowercase format with all spaces and hyphens replaced with '\_'. To override the case lowering, you must set the parameter `case_sensitive: true`_
 
 | Name | Description | Type | Default Value | Mandatory |
 | --- | --- | --- | --- | --- |
+| name | [Required] Provide a resource name. Must be at least 1 character but but less than 128 characters | string | | X |
+| identifier | [Optional] Provide a custom identifier.  Must be at least 1 character but but less than 128 characters and can only include alphanumeric or '_' | string | null | |
 | name | [Required] Provide an organization name.  Must be two or more characters | string | | X |
 | organization_id | [Required] Provide an organization reference ID.  Must exist before execution | string | | X |
 | project_id | [Required] Provide an project reference ID.  Must exist before execution | string | | X |
-| identifier | [Optional] Provide a custom identifier.  More than 2 but less than 128 characters and can only include alphanumeric or '_' | string | null | |
 | description | [Optional] Provide an organization description.  Must be six or more characters | string | "Harness Organization created via Terraform" | |
 | yaml_file | [Optional] (String) File Path to yaml snippet to include. Must not be provided in conjuction with `var.yaml_data` | string | null | |
 | yaml_data | [Optional] (String) Description of the resource. Must not be provided in conjuction with `var.yaml_file` | string | null | |
 | yaml_render | [Optional] (Boolean) Determines if the pipeline data should be templatized or is a full pipeline reference file | bool | true | |
+| case_sensitive | [Optional] Should identifiers be case sensitive by default? (Note: Setting this value to `true` will retain the case sensitivity of the identifier) | bool | false | |
 | tags | [Optional] Provide a Map of Tags to associate with the organization | map(any) | {} | |
 | global_tags | [Optional] Provide a Map of Tags to associate with all organizations and resources created | map(any) | {} | |
 

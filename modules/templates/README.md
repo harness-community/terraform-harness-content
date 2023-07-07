@@ -11,8 +11,10 @@ _Note: The list of supported Terraform Versions is based on the most recent of e
 
     - v1.2.9
     - v1.3.9
-    - v1.4.0
-    - v1.4.2
+    - v1.4.6
+    - v1.5.0
+    - v1.5.1
+    - v1.5.2
 
 _Note: Terraform version 1.4.1 will not work due to an issue with the Random provider_
 
@@ -36,14 +38,14 @@ terraform {
 
 ## Variables
 
-_Note: When the identifier variable is not provided, the module will automatically format the identifier based on the provided resource name_
+_Note: When the identifier variable is not provided, the module will automatically format the identifier based on the provided resource name and the identifier will be in lowercase format with all spaces and hyphens replaced with '\_'. To override the case lowering, you must set the parameter `case_sensitive: true`_
 
 | Name | Description | Type | Default Value | Mandatory |
 | --- | --- | --- | --- | --- |
-| name | [Required] (String) Name of the resource. | string |  | X |
+| name | [Required] Provide a resource name. Must be at least 1 character but but less than 128 characters | string | | X |
+| identifier | [Optional] Provide a custom identifier.  Must be at least 1 character but but less than 128 characters and can only include alphanumeric or '_' | string | null | |
 | template_version | [Required] Version Label for Template. | string |  | X |
 | type | [Required] (String) Type of Template | string |  | X |
-| identifier | [Optional] Provide a custom identifier.  More than 2 but less than 128 characters and can only include alphanumeric or '_' | string | null | |
 | organization_id | [Optional] Provide an organization reference ID. Must exist before execution | string | null | |
 | project_id | [Optional] Provide an project reference ID. Must exist before execution | string | null | |
 | comments | [Optional] (String) Specify comment with respect to changes. | string | Changes to Template managed by Terraform | |
@@ -52,6 +54,7 @@ _Note: When the identifier variable is not provided, the module will automatical
 | yaml_data | [Optional] (String) Description of the resource. | string | null | One of `yaml_file` or `yaml_data` must be provided. |
 | yaml_render | [Optional] (Boolean) Determines if the pipeline data should be templatized or is a full pipeline reference file | bool | true | |
 | is_stable | [Optional] (Boolean) If true, given version for Template to be set as stable. | bool | true | |
+| case_sensitive | [Optional] Should identifiers be case sensitive by default? (Note: Setting this value to `true` will retain the case sensitivity of the identifier) | bool | false | |
 | tags | [Optional] Provide a Map of Tags to associate with the project | map(any) | {} | |
 | global_tags | [Optional] Provide a Map of Tags to associate with the project and resources created | map(any) | {} | |
 
