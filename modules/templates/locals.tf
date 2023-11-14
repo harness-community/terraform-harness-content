@@ -67,7 +67,6 @@ locals {
       "${path.module}/templates/template_definition.yml.tpl",
       {
         pipeline_name           = var.name
-        description             = var.description
         pipeline_identifier     = local.fmt_identifier
         organization_identifier = var.organization_id
         project_identifier      = var.project_id

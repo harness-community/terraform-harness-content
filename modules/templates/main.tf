@@ -21,8 +21,10 @@ resource "harness_platform_template" "templates" {
   # [Required] (String) YAML of the pipeline.
   template_yaml = local.yaml_payload
 
-  # [Optional] (String) Description of the resource.
+  # 2023-11-14 This field has been deprecated
+  # [Optional] (String, Deprecated) Description of the entity. Description field is deprecated
   # description = var.description
+
   # [Optional] (String) Comments with respect to changes.
   comments = var.comments
   # [Optional] (String) Version Label for Template.

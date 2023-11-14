@@ -98,15 +98,15 @@ variable "type" {
   type        = string
   description = "[Required] (String) Type of Template"
 
-  validation {
-    condition = (
-      contains(["CustomDeployment", "Deployment", "MonitoredService", "Stage", "Step", "Pipeline", "SecretManager"], var.type)
-    )
-    error_message = <<EOF
-        Validation of an object failed.
-            * [Required] Provide the Template type. Valid types are: Deployment, MonitoredService, Stage, Step, Pipeline or SecretManager.
-        EOF
-  }
+  # validation {
+  #   condition = (
+  #     contains(["CustomDeployment", "Deployment", "MonitoredService", "Stage", "Step", "Pipeline", "SecretManager"], var.type)
+  #   )
+  #   error_message = <<EOF
+  #       Validation of an object failed.
+  #           * [Required] Provide the Template type. Valid types are: Deployment, MonitoredService, Stage, Step, Pipeline or SecretManager.
+  #       EOF
+  # }
 }
 
 variable "comments" {
@@ -125,21 +125,23 @@ variable "comments" {
   }
 }
 
-variable "description" {
-  type        = string
-  description = "[Optional] (String) Description of the resource."
-  default     = "Harness Template created via Terraform"
+# 2023-11-14 This field has been deprecated
+# [Optional] (String, Deprecated) Description of the entity. Description field is deprecated
+# variable "description" {
+#   type        = string
+#   description = "[Optional] (String, Deprecated) Description of the entity. Description field is deprecated"
+#   default     = "Harness Template created via Terraform"
 
-  validation {
-    condition = (
-      length(var.description) > 6
-    )
-    error_message = <<EOF
-        Validation of an object failed.
-            * [Optional] Provide a Template description. Must be six or more characters.
-        EOF
-  }
-}
+#   validation {
+#     condition = (
+#       length(var.description) > 6
+#     )
+#     error_message = <<EOF
+#         Validation of an object failed.
+#             * [Optional] Provide a Template description. Must be six or more characters.
+#         EOF
+#   }
+# }
 
 variable "yaml_file" {
   type        = string

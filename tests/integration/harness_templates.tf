@@ -134,7 +134,6 @@ module "template_step_yaml_data_full" {
     identifier: test_template_step_yaml_data_full
     projectIdentifier: ${local.project_id}
     orgIdentifier: ${local.organization_id}
-    description: Harness Template created via Terraform
     versionLabel: v1.0.0
     type: Step
     spec:
