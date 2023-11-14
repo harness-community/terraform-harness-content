@@ -6,7 +6,6 @@
 locals {
   template_outputs = flatten([
     {
-      test                  = true
       relative              = module.template_step_relative.details
       relative_organization = module.template_step_relative_organization.details
       relative_account      = module.template_step_relative_account.details

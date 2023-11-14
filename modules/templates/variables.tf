@@ -98,15 +98,15 @@ variable "type" {
   type        = string
   description = "[Required] (String) Type of Template"
 
-  # validation {
-  #   condition = (
-  #     contains(["CustomDeployment", "Deployment", "MonitoredService", "Stage", "Step", "Pipeline", "SecretManager"], var.type)
-  #   )
-  #   error_message = <<EOF
-  #       Validation of an object failed.
-  #           * [Required] Provide the Template type. Valid types are: Deployment, MonitoredService, Stage, Step, Pipeline or SecretManager.
-  #       EOF
-  # }
+  validation {
+    condition = (
+      contains(["Step", "Stage", "Pipeline", "CustomDeployment", "MonitoredService", "SecretManager", "ArtifactSource", "StepGroup"], var.type)
+    )
+    error_message = <<EOF
+        Validation of an object failed.
+            * [Required] Provide the Template type. Valid types are: Step, Stage, Pipeline, CustomDeployment, MonitoredService, SecretManager, ArtifactSource, or StepGroup.
+        EOF
+  }
 }
 
 variable "comments" {
