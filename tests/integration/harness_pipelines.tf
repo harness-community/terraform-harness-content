@@ -107,6 +107,9 @@ module "pipelines_file_yaml_data_full" {
     projectIdentifier: ${local.project_id}
     orgIdentifier: ${local.organization_id}
     description: Harness Pipeline created via Terraform
+    tags:
+      created_by: Terraform
+      purpose: terraform-testing
     stages:
       - stage:
           description: ""

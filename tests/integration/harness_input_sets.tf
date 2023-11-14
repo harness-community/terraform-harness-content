@@ -78,6 +78,8 @@ module "input_sets_yaml_data_full" {
     orgIdentifier: ${local.organization_id}
     projectIdentifier: ${local.project_id}
     description: Harness Input Set created via Terraform
+    tags:
+      created_by: Terraform
     pipeline:
       identifier: ${module.pipeline_input_sets.details.id}
       variables:
