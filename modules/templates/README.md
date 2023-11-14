@@ -48,11 +48,10 @@ _Note: When the identifier variable is not provided, the module will automatical
 | name | [Required] Provide a resource name. Must be at least 1 character but but less than 128 characters | string | | X |
 | identifier | [Optional] Provide a custom identifier.  Must be at least 1 character but but less than 128 characters and can only include alphanumeric or '_' | string | null | |
 | template_version | [Required] Version Label for Template. | string |  | X |
-| type | [Required] (String) Type of Template | string |  | X |
+| type | [Required] (String) Type of Template. Valid types are: Step, Stage, Pipeline, CustomDeployment, MonitoredService, SecretManager, ArtifactSource, or StepGroup | string |  | X |
 | organization_id | [Optional] Provide an organization reference ID. Must exist before execution | string | null | |
 | project_id | [Optional] Provide an project reference ID. Must exist before execution | string | null | |
 | comments | [Optional] (String) Specify comment with respect to changes. | string | Changes to Template managed by Terraform | |
-| description | [Optional] (String) Description of the resource. | string | Harness Template created via Terraform | |
 | yaml_file | [Optional] (String) File Path to yaml snippet to include. Must not be provided in conjuction with var.yaml_data.| string | null | One of `yaml_file` or `yaml_data` must be provided. |
 | yaml_data | [Optional] (String) Description of the resource. | string | null | One of `yaml_file` or `yaml_data` must be provided. |
 | yaml_render | [Optional] (Boolean) Determines if the pipeline data should be templatized or is a full pipeline reference file | bool | true | |
