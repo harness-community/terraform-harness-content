@@ -6,7 +6,6 @@
 locals {
   template_outputs = flatten([
     {
-      test                  = true
       relative              = module.template_step_relative.details
       relative_organization = module.template_step_relative_organization.details
       relative_account      = module.template_step_relative_account.details
@@ -134,7 +133,6 @@ module "template_step_yaml_data_full" {
     identifier: test_template_step_yaml_data_full
     projectIdentifier: ${local.project_id}
     orgIdentifier: ${local.organization_id}
-    description: Harness Template created via Terraform
     versionLabel: v1.0.0
     type: Step
     spec:

@@ -31,7 +31,7 @@ resource "harness_platform_triggers" "trigger" {
   # (Block List, Max: 1) Contains parameters related to creating an Entity for Git Experience.
   # git_details = var.git_details
   # [Optional] (Set of String) Tags to associate with the resource.
-  tags = local.common_tags
+  tags = local.common_tags_tuple
 }
 
 # When creating a new resource, there is a potential race-condition
