@@ -47,6 +47,6 @@ resource "time_sleep" "template_setup" {
     harness_platform_template.templates
   ]
 
-  create_duration  = "15s"
-  destroy_duration = "5s"
+  create_duration  = "30s"
+  destroy_duration = "15s"
 }
